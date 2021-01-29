@@ -1,12 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Req, UseInterceptors } from '@nestjs/common';
+import { ResponseInterceptor } from './interceptors/response.interceptor';
+import { Request } from 'express';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @UseInterceptors(ResponseInterceptor)
+  getHello(@Req() request: Request): any {
+    return {
+      message: 'NestJs Mongo Boilerplate',
+      method: request.method,
+    };
   }
 }

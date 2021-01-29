@@ -1,15 +1,24 @@
-import { Controller, Get, Req, UseInterceptors } from '@nestjs/common';
-import { Request } from 'express';
+import { Body, Controller, Get, Post, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CatsService } from './cats.service';
-import { Cat } from './cat.entity';
-import { TransformInterceptor } from '../interceptors/transform.interceptor';
+import { Cat } from './schemas/cat.schema';
+import { ResponseInterceptor } from '../interceptors/response.interceptor';
+import { CatDto } from './dto/cat.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('cats')
-@UseInterceptors(TransformInterceptor)
+@UseInterceptors(ResponseInterceptor)
 export class CatsController {
-  constructor(private readonly catService: CatsService) {}
+  constructor(private readonly catsService: CatsService) {}
+
+  @Post()
+  @UseGuards(AuthGuard(['jwt']))
+  async create(@Body() createCat: CatDto) {
+    return await this.catsService.create(createCat);
+  }
+
   @Get()
-  findAll(@Req() request: Request): Promise<Cat[]> {
-    return this.catService.findAll();
+  @UseGuards(AuthGuard(['jwt', 'evaly-secret']))
+  async findAll(): Promise<Cat[]> {
+    return this.catsService.findAll();
   }
 }
