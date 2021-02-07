@@ -3,10 +3,11 @@ import { AppController } from './app.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CatsModule } from './cats/cats.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AuthModule } from './auth/auth.module';
+import { CoreModule } from './core/core.module';
 
 @Module({
   imports: [
+    CoreModule,
     ConfigModule.forRoot({
       expandVariables: false,
     }),
@@ -17,8 +18,7 @@ import { AuthModule } from './auth/auth.module';
       }),
       inject: [ConfigService],
     }),
-    CatsModule,
-    AuthModule,
+    CatsModule
   ],
   controllers: [AppController],
   providers: [],

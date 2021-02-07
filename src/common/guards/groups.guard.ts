@@ -12,14 +12,15 @@ export class GroupsGuard implements CanActivate {
     }
     const request = context.switchToHttp().getRequest();
     const user = request.user;
-    // if(!request.user)
-    console.log(user.groups);
-    this.hasGroups(user.groups, groups);
-    // return matchRoles(groups, user.groups);
-    return true;
+
+    return this.hasGroups(user.groups, groups);
   }
 
   hasGroups(userGroup, accessGroup) {
-    console.log(accessGroup.some((v) => userGroup.includes(v)));
+    if(!userGroup) return false;
+
+    if(!accessGroup) return true;
+
+    return accessGroup.some((v) => userGroup.includes(v));
   }
 }

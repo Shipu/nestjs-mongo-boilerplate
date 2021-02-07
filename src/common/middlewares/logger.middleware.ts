@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
 export function logger(req: Request, res: Response, next: NextFunction) {
-  console.log('global logger middleware.');
+  console.log('global logger middlewares.');
   next();
 }

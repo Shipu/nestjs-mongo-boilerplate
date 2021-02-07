@@ -1,5 +1,5 @@
 import { Controller, Get, Req, UseInterceptors } from '@nestjs/common';
-import { ResponseInterceptor } from './interceptors/response.interceptor';
+import { ResponseInterceptor } from './core/interceptors/response.interceptor';
 import { Request } from 'express';
 
 @Controller()

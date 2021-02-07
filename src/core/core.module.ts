@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
-import { JwtStrategy } from './jwt.strategy';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { LoggingInterceptor } from './interceptors/logging.interceptor';
+import { ResponseInterceptor } from './interceptors/response.interceptor';
+import { JwtStrategy } from '../common/strategies/jwt.strategy';
+import { EvalySecretStrategy } from '../common/strategies/evaly-secret.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { EvalySecretStrategy } from './evaly-secret.strategy';
 
 @Module({
   imports: [
@@ -17,7 +20,10 @@ import { EvalySecretStrategy } from './evaly-secret.strategy';
     }),
     ConfigModule,
   ],
-  providers: [JwtStrategy, EvalySecretStrategy],
-  exports: [],
+  providers: [
+    { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },
+    JwtStrategy,
+    EvalySecretStrategy,
+  ],
 })
-export class AuthModule {}
+export class CoreModule {}
