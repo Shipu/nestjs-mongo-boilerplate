@@ -17,9 +17,9 @@ export class GroupsGuard implements CanActivate {
   }
 
   hasGroups(userGroup, accessGroup) {
-    if(!userGroup) return false;
+    if (!userGroup) return false;
 
-    if(!accessGroup) return true;
+    if (!accessGroup) return true;
 
     return accessGroup.some((v) => userGroup.includes(v));
   }

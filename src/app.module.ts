@@ -18,7 +18,7 @@ import { CoreModule } from './core/core.module';
       }),
       inject: [ConfigService],
     }),
-    CatsModule
+    CatsModule,
   ],
   controllers: [AppController],
   providers: [],
