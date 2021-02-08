@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  # The application
+  app:
+    build: .
+    env_file:
+      - ./.env
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    volumes:
+      - .:/opt/app
+    command: yarn run start:dev
