@@ -22,21 +22,21 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, Response<T>> {
     return next.handle().pipe(
       map((data) => {
         let message = null;
-        let status = null;
+        let statusCode = null;
         if (data?.message) {
           message = data.message;
           delete data.message;
         }
 
         if (data?.statusCode) {
-          status = data.statusCode;
+          statusCode = data.statusCode;
           delete data.statusCode;
         }
 
-        status = status || response.statusCode;
-        response.status(status);
+        statusCode = statusCode || response.statusCode;
+        response.status(statusCode);
         return {
-          status: status,
+          statusCode: statusCode,
           message: message || response.statusMessage || 'OK',
           data: data || {},
         };
