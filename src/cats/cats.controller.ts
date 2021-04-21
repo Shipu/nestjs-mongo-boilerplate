@@ -1,14 +1,14 @@
 import { Body, Controller, Get, Post, SetMetadata, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { Cat } from './schemas/cat.schema';
-import { ResponseInterceptor } from '../core/interceptors/response.interceptor';
+import { ResponseTransformInterceptor } from '../core/http/interceptors/response.transform.interceptor';
 import { CatDto } from './dto/cat.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { Groups } from '../common/decorators/groups.decorator';
-import { GroupsGuard } from '../common/guards/groups.guard';
+import { Groups } from '../core/decorators/groups.decorator';
+import { GroupsGuard } from '../core/guards/groups.guard';
 
 @Controller('cats')
-@UseInterceptors(ResponseInterceptor)
+@UseInterceptors(ResponseTransformInterceptor)
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 

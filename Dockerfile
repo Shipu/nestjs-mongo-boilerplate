@@ -11,4 +11,8 @@ RUN yarn
 
 COPY . .
 
-ENTRYPOINT yarn run start:dev
+RUN yarn run prebuild
+
+RUN yarn run build
+
+ENTRYPOINT yarn nest info && yarn run start:dev
